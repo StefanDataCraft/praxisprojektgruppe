@@ -3,31 +3,55 @@ import pandas as pd
 
 
 class Person:
-    def __init__(self, name):
+    personality_characteristics = []
+
+    def __init__(self, name, alter):
         self.name = name
+        self.alter = alter
+
+    def add_personality_characteristic(self, skill_name):
+        self.personality_characteristics.append(skill_name)
+
+    def get_personality_characteristics(self):
+        return self.personality_characteristics
 
     def introduce(self):
-        print(f"Hallo, mein Name ist {self.name}")
+        print(f"Hallo, mein Name ist {self.name}, ich bin {self.alter} Jahre alt")
 
 
 class Student(Person):
-    def __init__(self, name, reason):
-        super().__init__(name)
+    soft_skills = []
+    hard_skills = []
+
+    def __init__(self, name, alter, reason):
+        super().__init__(name, alter)
         self.reason = reason
+
+    def add_soft_skill(self, soft_skill_name):
+        self.soft_skills.append(soft_skill_name)
+
+    def get_soft_skills(self):
+        return self.soft_skills
+
+    def add_hard_skill(self, hard_skill_name):
+        self.hard_skills.append(hard_skill_name)
+
+    def get_hard_skills(self):
+        return self.hard_skills
 
 
 class Professor(Person):
-    skill_list = []
+    skills = []
 
-    def __init__(self, name, biographie):
-        super().__init__(name)
+    def __init__(self, name, alter, biographie):
+        super().__init__(name, alter)
         self.biographie = biographie
 
     def add_skill(self, skill_name):
-        self.skill_list.append(skill_name)
+        self.skills.append(skill_name)
 
     def get_skills(self):
-        return self.skill_list
+        return self.skills
 
 
 class Workshop:
@@ -59,12 +83,16 @@ class Workshop:
         for student in self.students:
             student_to_insert = dict()
             student_to_insert['name'] = student.name
+            student_to_insert['alter'] = student.alter
+            student_to_insert['personal_characteristics'] = student.personal_characteristics
             student_to_insert['reason'] = student.reason
             students_list.append(student_to_insert)
         students_df = pd.DataFrame(students_list)
         for professor in self.professors:
             professor_to_insert = dict()
             professor_to_insert['name'] = professor.name
+            professor_to_insert['alter'] = professor.alter
+            professor_to_insert['personal_characteristics'] = professor.personal_characteristics
             professor_to_insert['skills'] = professor.skill_list
             professors_list.append(professor_to_insert)
         professors_df = pd.DataFrame(professors_list)
