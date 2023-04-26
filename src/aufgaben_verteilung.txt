@@ -2,3 +2,9 @@ Student - Stefan
 Dozent - Bernd
 Person - Stefan & Bernd
 
+Properties:
+alter =
+skills =
+charaktereigenschaften =
+persönlichkeitsentwicklung =
+faehigkeiten =

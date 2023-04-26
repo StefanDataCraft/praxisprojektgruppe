@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 import pandas as pd
 
+
 class Person:
     def __init__(self, name):
         self.name = name
@@ -10,12 +11,12 @@ class Person:
 
 
 class Student(Person):
-    def __init__(self, name,reason):
+    def __init__(self, name, reason):
         super().__init__(name)
         self.reason = reason
 
 
-class Dozent(Person):
+class Professor(Person):
     skill_list = []
 
     def __init__(self, name, biographie):
@@ -28,44 +29,77 @@ class Dozent(Person):
     def get_skills(self):
         return self.skill_list
 
-class Workshop:
-    #start_date
-    #end_date
-    #thema
 
-    dozenten = []
-    studenten = []
+class Workshop:
+    professors = []
+    students = []
 
     def __init__(self, start_date, end_date, thema):
         try:
             self.start_date = dt.strptime(start_date, "%d.%m.%Y").date()
-        except:
+        except ValueError:
             print("Invalid start date")
             exit()
         try:
             self.end_date = dt.strptime(end_date, "%d.%m.%Y").date()
-        except:
+        except ValueError:
             print("Invalid end date")
             exit()
         self.thema = thema
 
     def add_participants(self, person):
         if type(person) is Student:
-            self.studenten.append(person)
-        elif type(person) is Dozent:
-            self.dozenten.append(person)
+            self.students.append(person)
+        elif type(person) is Professor:
+            self.professors.append(person)
+
+    def get_members(self):
+        students_list = []
+        professors_list = []
+        for student in self.students:
+            student_to_insert = dict()
+            student_to_insert['name'] = student.name
+            student_to_insert['reason'] = student.reason
+            students_list.append(student_to_insert)
+        students_df = pd.DataFrame(students_list)
+        for professor in self.professors:
+            professor_to_insert = dict()
+            professor_to_insert['name'] = professor.name
+            professor_to_insert['skills'] = professor.skill_list
+            professors_list.append(professor_to_insert)
+        professors_df = pd.DataFrame(professors_list)
+        return {"students": students_df, "professors": professors_df}
+
+    def get_workshop(self):
+        return {"start_date": self.start_date, "end_date": self.end_date, "thema": self.thema}
+
+    def get_details(self):
+        members = self.get_members()
+        workshop = self.get_workshop()
+        students = members["students"]
+        professors = members["professors"]
+        return {"workshop": workshop, "students": students, "professors": professors}
 
     def print_members(self):
-        studenten_df = pd.DataFrame()
-        dozenten_df = pd.DataFrame()
-        for student in self.studenten:
-            student_to_insert = pd.DataFrame()
-            student_to_insert['name'] = student.name
-            studenten_df.loc[len(studenten_df)] = student_to_insert
-        for dozent in self.dozenten:
-            dozent_to_insert = pd.DataFrame()
-            dozent_to_insert['name'] = dozent.name
-            dozent_to_insert['skills'] = dozent.skill_list
-            dozenten_df.loc[len(dozenten_df)] = dozent_to_insert
-        return (studenten_df, dozenten_df)
+        members = self.get_members()
+        print("Studenten: ")
+        print(members["students"])
+        print("*************************")
+        print("Dozenten: ")
+        print(members["professors"])
+        print("*************************")
 
+    def print_workshop(self):
+        workshop = self.get_workshop()
+        start_date = workshop["start_date"]
+        formatted_start_date = start_date.strftime("%d.%m.%Y")
+        end_date = workshop["end_date"]
+        formatted_end_date = end_date.strftime("%d.%m.%Y")
+        thema = workshop["thema"]
+        print(f"Von: {formatted_start_date} bis {formatted_end_date}")
+        print(f"Thema: {thema}")
+        print("*************************")
+
+    def print_details(self):
+        self.print_workshop()
+        self.print_members()
