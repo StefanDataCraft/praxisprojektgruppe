@@ -11,9 +11,6 @@ class Student(Person):
         super().__init__(name)
         self.reason = reason
 
-    def introduce(self):
-
-        print(f"Ich bin {self.name}")
 
 
 
