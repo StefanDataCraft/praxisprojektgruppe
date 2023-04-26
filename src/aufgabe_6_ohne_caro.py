@@ -47,6 +47,7 @@ class Workshop:
             print("Invalid end date")
             exit()
         self.thema = thema
+
     def add_participants(self, person):
         if type(person) is Student:
             self.studenten.append(person)
