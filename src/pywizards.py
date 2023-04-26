@@ -5,9 +5,9 @@ import pandas as pd
 class Person:
     personality_characteristics = []
 
-    def __init__(self, name, alter):
+    def __init__(self, name, age):
         self.name = name
-        self.alter = alter
+        self.age = age
 
     def add_personality_characteristic(self, skill_name):
         self.personality_characteristics.append(skill_name)
@@ -16,15 +16,15 @@ class Person:
         return self.personality_characteristics
 
     def introduce(self):
-        print(f"Hallo, mein Name ist {self.name}, ich bin {self.alter} Jahre alt")
+        print(f"Hallo, mein Name ist {self.name}, ich bin {self.age} Jahre alt")
 
 
 class Student(Person):
     soft_skills = []
     hard_skills = []
 
-    def __init__(self, name, alter, reason):
-        super().__init__(name, alter)
+    def __init__(self, name, age, reason):
+        super().__init__(name, age)
         self.reason = reason
 
     def add_soft_skill(self, soft_skill_name):
@@ -43,8 +43,8 @@ class Student(Person):
 class Professor(Person):
     skills = []
 
-    def __init__(self, name, alter, biographie):
-        super().__init__(name, alter)
+    def __init__(self, name, age, biographie):
+        super().__init__(name, age)
         self.biographie = biographie
 
     def add_skill(self, skill_name):
@@ -83,17 +83,19 @@ class Workshop:
         for student in self.students:
             student_to_insert = dict()
             student_to_insert['name'] = student.name
-            student_to_insert['alter'] = student.alter
-            student_to_insert['personal_characteristics'] = student.personal_characteristics
+            student_to_insert['age'] = student.age
+            student_to_insert['personality_characteristics'] = student.personality_characteristics
+            student_to_insert['soft_skills'] = student.soft_skills
+            student_to_insert['hard_skills'] = student.hard_skills
             student_to_insert['reason'] = student.reason
             students_list.append(student_to_insert)
         students_df = pd.DataFrame(students_list)
         for professor in self.professors:
             professor_to_insert = dict()
             professor_to_insert['name'] = professor.name
-            professor_to_insert['alter'] = professor.alter
-            professor_to_insert['personal_characteristics'] = professor.personal_characteristics
-            professor_to_insert['skills'] = professor.skill_list
+            professor_to_insert['age'] = professor.age
+            professor_to_insert['personality_characteristics'] = professor.personality_characteristics
+            professor_to_insert['skills'] = professor.skills
             professors_list.append(professor_to_insert)
         professors_df = pd.DataFrame(professors_list)
         return {"students": students_df, "professors": professors_df}
@@ -110,11 +112,34 @@ class Workshop:
 
     def print_members(self):
         members = self.get_members()
+        print("members")
+        print(members)
+        print("*************************")
         print("Studenten: ")
-        print(members["students"])
+        for student in members["students"]:
+            print(student)
+            print(f"Name: "+student["name"])
+            print(f"Alter: {student.age}")
+            print("Persönlichkeitsmerkmale:")
+            for personal_characteristic in student.personal_characteristics:
+                print(personal_characteristic)
+            print("Soft skills:")
+            for soft_skill in student.soft_skills:
+                print(soft_skill)
+            print("Soft skills:")
+            for hard_skill in student.hard:
+                print(hard_skill)
         print("*************************")
         print("Dozenten: ")
-        print(members["professors"])
+        for professor in members["professors"]:
+            print(f"Name: {professor.name}")
+            print(f"Alter: {professor.age}")
+            print("Persönlichkeitsmerkmale:")
+            for personal_characteristic in professor.personal_characteristics:
+                print(personal_characteristic)
+            print("Skills:")
+            for skill in professor.soft_skills:
+                print(skill)
         print("*************************")
 
     def print_workshop(self):
