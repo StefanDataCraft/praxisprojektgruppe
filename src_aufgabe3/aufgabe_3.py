@@ -3,23 +3,29 @@ from datetime import datetime as dt
 from PIL import Image
 import os
 
-signs = [(1,20,"Cap"), (2,18,"Aqu"), (3,20,"Pis"), (4,20,"Ari"),
-         (5,21,"Tau"), (6,21,"Gem"), (7,22,"Can"), (8,23,"Leo"),
-         (9,23,"Vir"), (10,23,"Lib"), (11,22,"Sco"), (12,22,"Sag"),
-         (12,31,"Cap")]
+# Zodiacal signs
+signs = [(1, 20, "Cap"), (2, 18, "Aqu"), (3 , 20, "Pis"), (4, 20, "Ari"),
+         (5, 21, "Tau"), (6, 21, "Gem"), (7, 22, "Can"), (8, 23, "Leo"),
+         (9, 23, "Vir"), (10, 23, "Lib"), (11, 22, "Sco"), (12, 22, "Sag"),
+         (12, 31, "Cap")]
 
 
-def zodiac_sign(m,d):
-    return signs[bisect(signs,(m,d))][2]
+# Gets zodiac sign from month & day of birth
+def zodiac_sign(m, d):
+    return signs[bisect(signs, (m, d))][2]
 
+
+# Checks out if image is big enough (800x800)
 def image_size_ok(foto):
-    img1 = Image.open(foto)
-    size = img1.size
+    img = Image.open(foto)
+    size = img.size
     if size[0] >= 800 and size[1] >= 800:
         return True
     else:
         return False
 
+
+# Get Birthday from user. Validation is made
 while True:
     geburtstag = input("Geburtstag Tag.Monat: ")
     try:
@@ -31,10 +37,12 @@ while True:
 
 sign = zodiac_sign(birth.month, birth.day)
 
+
+# Get Filename of original picture, validation made
 while True:
     foto = input("Foto: ")
     if os.path.isfile(foto):
-        if (image_size_ok(foto)):
+        if image_size_ok(foto):
             break
         else:
             print("Datei zu klein")
@@ -49,7 +57,7 @@ img = img.convert("RGBA")
 img1 = Image.open(foto)
 img2 = Image.open(sign_image_path)
 img2 = img2.convert('L')
-img2.putalpha(230)
+img2.putalpha(80)
 img1_size = img1.size
 img2_size = img2.size
 
