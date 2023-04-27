@@ -1,10 +1,7 @@
 from datetime import datetime as dt
-import pandas as pd
 
 
 class Person:
-    #personality_characteristics = []
-
     def __init__(self, name, age):
         self.name = name
         self.age = age
@@ -75,41 +72,11 @@ class Workshop:
         elif type(person) is Professor:
             self.professors.append(person)
 
-    def get_members(self):
-        students_list = []
-        professors_list = []
-        for student in self.students:
-            student_to_insert = dict()
-            student_to_insert['name'] = student.name
-            student_to_insert['age'] = student.age
-            student_to_insert['personality_characteristics'] = student.personality_characteristics
-            student_to_insert['soft_skills'] = student.soft_skills
-            student_to_insert['hard_skills'] = student.hard_skills
-            student_to_insert['reason'] = student.reason
-            students_list.append(student_to_insert)
-        students_df = pd.DataFrame(students_list)
-        for professor in self.professors:
-            professor_to_insert = dict()
-            professor_to_insert['name'] = professor.name
-            professor_to_insert['age'] = professor.age
-            professor_to_insert['personality_characteristics'] = professor.personality_characteristics
-            professor_to_insert['skills'] = professor.skills
-            professors_list.append(professor_to_insert)
-        professors_df = pd.DataFrame(professors_list)
-        return {"students": students_df, "professors": professors_df}
-
     def get_workshop(self):
         return {"start_date": self.start_date, "end_date": self.end_date, "thema": self.thema}
 
-    def get_details(self):
-        members = self.get_members()
-        workshop = self.get_workshop()
-        students = members["students"]
-        professors = members["professors"]
-        return {"workshop": workshop, "students": students, "professors": professors}
-
     def print_members(self):
-        print("Studenten: ")
+        print("Studenten:")
         print("----------------------------")
         for student in self.students:
             print(f"Name: {student.name}")
