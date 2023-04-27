@@ -3,11 +3,12 @@ import pandas as pd
 
 
 class Person:
-    personality_characteristics = []
+    #personality_characteristics = []
 
     def __init__(self, name, age):
         self.name = name
         self.age = age
+        self.personality_characteristics = []
 
     def add_personality_characteristic(self, skill_name):
         self.personality_characteristics.append(skill_name)
@@ -16,16 +17,18 @@ class Person:
         return self.personality_characteristics
 
     def introduce(self):
-        print(f"Hallo, mein Name ist {self.name}, ich bin {self.age} Jahre alt")
+        print(f"Hallo, mein Name ist {self.name}, ich bin {self.age} Jahre alt und bin {', '.join(self.personality_characteristics)}.")
 
 
 class Student(Person):
-    soft_skills = []
-    hard_skills = []
+    #soft_skills = []
+    #hard_skills = []
 
     def __init__(self, name, age, reason):
         super().__init__(name, age)
         self.reason = reason
+        self.soft_skills = []
+        self.hard_skills = []
 
     def add_soft_skill(self, soft_skill_name):
         self.soft_skills.append(soft_skill_name)
@@ -41,11 +44,12 @@ class Student(Person):
 
 
 class Professor(Person):
-    skills = []
+    #skills = []
 
     def __init__(self, name, age, biographie):
         super().__init__(name, age)
         self.biographie = biographie
+        self.skills = []
 
     def add_skill(self, skill_name):
         self.skills.append(skill_name)
@@ -111,8 +115,8 @@ class Workshop:
         return {"workshop": workshop, "students": students, "professors": professors}
 
     def print_members(self):
-        print("*************************")
         print("Studenten: ")
+        print("----------------------------")
         for student in self.students:
             print(f"Name: {student.name}")
             print(f"Alter: {student.age}")
@@ -122,10 +126,11 @@ class Workshop:
             print("Soft skills:")
             for soft_skill in student.soft_skills:
                 print(soft_skill)
-            print("Soft skills:")
+            print("Hard skills:")
             for hard_skill in student.hard_skills:
                 print(hard_skill)
-        print("*************************")
+            print("----------------------------")
+        print("+++++++++++++++++++++++++++++++++")
         print("Dozenten: ")
         for professor in self.professors:
             print(f"Name: {professor.name}")
@@ -136,6 +141,7 @@ class Workshop:
             print("Skills:")
             for skill in professor.skills:
                 print(skill)
+            print("----------------------------")
         print("*************************")
 
     def print_workshop(self):
@@ -147,8 +153,8 @@ class Workshop:
         thema = self.thema
         print(f"Von: {formatted_start_date} bis {formatted_end_date}")
         print(f"Thema: {thema}")
-        print("*************************")
 
     def print_details(self):
         self.print_workshop()
+        print("****************************************************")
         self.print_members()
