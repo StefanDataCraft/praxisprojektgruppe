@@ -57,12 +57,14 @@ img = img.convert("RGBA")
 img1 = Image.open(foto)
 img2 = Image.open(sign_image_path)
 img2 = img2.convert('L')
+# Transparent image setting here
 img2.putalpha(80)
 img1_size = img1.size
 img2_size = img2.size
 
-# No transparency mask specified,
-# simulating an raster overlay
+# Pasting image here on upper right corner
 img1.paste(img2, (img1_size[0]-img2_size[0], 0), img2)
+# Saving result image on Hard Drive
 img1.save("output.png")
+# Show result image
 img1.show()

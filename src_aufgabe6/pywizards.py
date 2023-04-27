@@ -1,3 +1,4 @@
+# Classes definition
 from datetime import datetime as dt
 
 
@@ -72,9 +73,11 @@ class Workshop:
         elif type(person) is Professor:
             self.professors.append(person)
 
+    # Returns workshop info
     def get_workshop(self):
         return {"start_date": self.start_date, "end_date": self.end_date, "thema": self.thema}
 
+    # Prints members from workshop info
     def print_members(self):
         print("Studenten:")
         print("----------------------------")
@@ -105,6 +108,7 @@ class Workshop:
             print("----------------------------")
         print("*************************")
 
+    # Print workshop info
     def print_workshop(self):
         workshop = self.get_workshop()
         start_date = self.start_date
@@ -115,6 +119,7 @@ class Workshop:
         print(f"Von: {formatted_start_date} bis {formatted_end_date}")
         print(f"Thema: {thema}")
 
+    # Prints workshop details ((calling print_workshop & print_members
     def print_details(self):
         self.print_workshop()
         print("****************************************************")
