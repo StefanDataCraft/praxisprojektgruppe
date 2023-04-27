@@ -12,7 +12,14 @@ signs = [(1,20,"Cap"), (2,18,"Aqu"), (3,20,"Pis"), (4,20,"Ari"),
 def zodiac_sign(m,d):
     return signs[bisect(signs,(m,d))][2]
 
-"""
+def image_size_ok(foto):
+    img1 = Image.open(foto)
+    size = img1.size
+    if size[0] >= 800 and size[1] >= 800:
+        return True
+    else:
+        return False
+
 while True:
     geburtstag = input("Geburtstag Tag.Monat: ")
     try:
@@ -21,47 +28,33 @@ while True:
         continue
     if zodiac_sign(birth.month, birth.day):
         break
-"""
-#sign = zodiac_sign(birth.month, birth.day)
-sign = zodiac_sign(5, 19)
 
-"""while True:
+sign = zodiac_sign(birth.month, birth.day)
+
+while True:
     foto = input("Foto: ")
     if os.path.isfile(foto):
-        break
-"""
-foto = "b.jpg"
+        if (image_size_ok(foto)):
+            break
+        else:
+            print("Datei zu klein")
+    else:
+        print("Datei ist nicht zu finden")
+
 sign_image_path = "sign_images/"+sign+".jpg"
 
-"""
-#Read the two images
-image1 = Image.open(foto)
-image1.show()
-image2 = Image.open(sign_image_path)
-image2.show()
-#resize, first image
-image1 = image1.resize((426, 240))
-image1_size = image1.size
-image2_size = image2.size
-new_image = Image.new('RGB', (2*image1_size[0], image1_size[1]), (250, 250, 250))
-new_image.paste(image1, (0, 0))
-new_image.paste(image2, (image1_size[0], 0))
-new_image.save("merged_image.jpg", "JPEG")
-new_image.show()
-"""
+img = Image.open(sign_image_path)
+img = img.convert("RGBA")
+
 img1 = Image.open(foto)
 img2 = Image.open(sign_image_path)
-
+img2 = img2.convert('L')
+img2.putalpha(230)
 img1_size = img1.size
 img2_size = img2.size
 
-print ("0 img1: "+str(img1_size[0]))
-print ("1 img1: "+str(img1_size[1]))
-print ("0 img2: "+str(img2_size[0]))
-print ("1 img2: "+str(img2_size[1]))
-
 # No transparency mask specified,
 # simulating an raster overlay
-img1.paste(img2, (img1_size[0]-img2_size[0], 0))
-
+img1.paste(img2, (img1_size[0]-img2_size[0], 0), img2)
+img1.save("output.png")
 img1.show()
