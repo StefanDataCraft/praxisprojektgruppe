@@ -21,9 +21,6 @@ class Person:
 
 
 class Student(Person):
-    #soft_skills = []
-    #hard_skills = []
-
     def __init__(self, name, age, reason):
         super().__init__(name, age)
         self.reason = reason
@@ -44,8 +41,6 @@ class Student(Person):
 
 
 class Professor(Person):
-    #skills = []
-
     def __init__(self, name, age, biographie):
         super().__init__(name, age)
         self.biographie = biographie
@@ -59,9 +54,6 @@ class Professor(Person):
 
 
 class Workshop:
-    professors = []
-    students = []
-
     def __init__(self, start_date, end_date, thema):
         try:
             self.start_date = dt.strptime(start_date, "%d.%m.%Y").date()
@@ -74,6 +66,8 @@ class Workshop:
             print("Invalid end date")
             exit()
         self.thema = thema
+        self.professors = []
+        self.students = []
 
     def add_participants(self, person):
         if type(person) is Student:
