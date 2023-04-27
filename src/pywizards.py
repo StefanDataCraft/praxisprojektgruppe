@@ -111,44 +111,40 @@ class Workshop:
         return {"workshop": workshop, "students": students, "professors": professors}
 
     def print_members(self):
-        members = self.get_members()
-        print("members")
-        print(members)
         print("*************************")
         print("Studenten: ")
-        for student in members["students"]:
-            print(student)
-            print(f"Name: "+student["name"])
+        for student in self.students:
+            print(f"Name: {student.name}")
             print(f"Alter: {student.age}")
             print("Persönlichkeitsmerkmale:")
-            for personal_characteristic in student.personal_characteristics:
-                print(personal_characteristic)
+            for personality_characteristic in student.personality_characteristics:
+                print(personality_characteristic)
             print("Soft skills:")
             for soft_skill in student.soft_skills:
                 print(soft_skill)
             print("Soft skills:")
-            for hard_skill in student.hard:
+            for hard_skill in student.hard_skills:
                 print(hard_skill)
         print("*************************")
         print("Dozenten: ")
-        for professor in members["professors"]:
+        for professor in self.professors:
             print(f"Name: {professor.name}")
             print(f"Alter: {professor.age}")
             print("Persönlichkeitsmerkmale:")
-            for personal_characteristic in professor.personal_characteristics:
-                print(personal_characteristic)
+            for personality_characteristic in professor.personality_characteristics:
+                print(personality_characteristic)
             print("Skills:")
-            for skill in professor.soft_skills:
+            for skill in professor.skills:
                 print(skill)
         print("*************************")
 
     def print_workshop(self):
         workshop = self.get_workshop()
-        start_date = workshop["start_date"]
+        start_date = self.start_date
         formatted_start_date = start_date.strftime("%d.%m.%Y")
-        end_date = workshop["end_date"]
+        end_date = self.end_date
         formatted_end_date = end_date.strftime("%d.%m.%Y")
-        thema = workshop["thema"]
+        thema = self.thema
         print(f"Von: {formatted_start_date} bis {formatted_end_date}")
         print(f"Thema: {thema}")
         print("*************************")
