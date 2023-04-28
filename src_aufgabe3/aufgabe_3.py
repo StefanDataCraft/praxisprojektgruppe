@@ -31,6 +31,7 @@ while True:
     try:
         birth = dt.strptime(geburtstag, "%d.%m").date()
     except ValueError:
+        print("Datum ungültig")
         continue
     if zodiac_sign(birth.month, birth.day):
         break
